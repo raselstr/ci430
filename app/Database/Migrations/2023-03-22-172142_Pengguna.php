@@ -33,7 +33,7 @@ class Pengguna extends Migration
         ]);
 
             $this->forge->addPrimaryKey('usernama');
-            $this->forge->createTable('pengguna');
+            $this->forge->createTable('pengguna', true);
     }
 
     public function down()

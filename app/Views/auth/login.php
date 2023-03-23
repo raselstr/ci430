@@ -15,7 +15,8 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title><?= esc($title) ?></title>
+    <!-- <title>  </title> -->
+    <title>Login</title>
 
     <meta name="description" content="" />
 
@@ -123,57 +124,80 @@
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to Sneat! 👋</h4>
+              <h4 class="mb-2"><?=lang('Auth.loginTitle')?> 👋</h4>
               <p class="mb-4">Please sign-in to your account and start the adventure</p>
 
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
-                <div class="mb-3">
-                  <label for="email" class="form-label">Email or Username</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email-username"
-                    placeholder="Enter your email or username"
-                    autofocus
-                  />
+
+              <?= view('Myth\Auth\Views\_message_block') ?>
+
+
+            <form action="<?= url_to('login') ?>" method="post" class="mb-3">
+						<?= csrf_field() ?>
+              <div class="mb-3">
+                <?php if ($config->validFields === ['email']): ?>
+						      <div class="form-group">
+							      <label for="login"><?=lang('Auth.email')?></label>
+							      <input type="email" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
+								      name="login" placeholder="<?=lang('Auth.email')?>">
+							      <div class="invalid-feedback">
+								<?= session('errors.login') ?>
+							</div>
+						</div>
+<?php else: ?>
+						<div class="form-group">
+							<label for="login"><?=lang('Auth.emailOrUsername')?></label>
+							<input type="text" class="form-control <?php if (session('errors.login')) : ?>is-invalid<?php endif ?>"
+								   name="login" placeholder="<?=lang('Auth.emailOrUsername')?>">
+							<div class="invalid-feedback">
+								<?= session('errors.login') ?>
+							</div>
+						</div>
+<?php endif; ?>
                 </div>
+
+
                 <div class="mb-3 form-password-toggle">
-                  <div class="d-flex justify-content-between">
-                    <label class="form-label" for="password">Password</label>
-                    <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a>
-                  </div>
-                  <div class="input-group input-group-merge">
-                    <input
-                      type="password"
-                      id="password"
-                      class="form-control"
-                      name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                      aria-describedby="password"
-                    />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                  </div>
+                <div class="form-group">
+							<label for="password"><?=lang('Auth.password')?></label>
+							<div class="input-group input-group-merge">
+              <input type="password" name="password" class="form-control  <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" placeholder="<?=lang('Auth.password')?>">
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                <div class="invalid-feedback">
+								<?= session('errors.password') ?>
+							</div>
+						</div>
+
+<?php if ($config->allowRemembering): ?>
+						<div class="form-check">
+							<label class="form-check-label">
+								<input type="checkbox" name="remember" class="form-check-input" <?php if (old('remember')): ?> checked <?php endif?>>
+								<?=lang('Auth.rememberMe')?>
+							</label>
+						</div>
+<?php endif;?>
                 </div>
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
                 </div>
+
+                
                 <div class="mb-3">
-                  <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
+                <button type="submit" class="btn btn-primary d-grid w-100"><?=lang('Auth.loginAction')?></button>
+                  
                 </div>
               </form>
+              <hr>
 
-              <p class="text-center">
+<?php if ($config->allowRegistration) : ?>
+					<p><a href="<?= url_to('register') ?>"><?=lang('Auth.needAnAccount')?></a></p>
+<?php endif; ?>
+<?php if ($config->activeResetter): ?>
+					<p><a href="<?= url_to('forgot') ?>"><?=lang('Auth.forgotYourPassword')?></a></p>
+<?php endif; ?>
+              <!-- <p class="text-center">
                 <span>New on our platform?</span>
                 <a href="auth-register-basic.html">
                   <span>Create an account</span>
                 </a>
-              </p>
+              </p> -->
             </div>
           </div>
           <!-- /Register -->

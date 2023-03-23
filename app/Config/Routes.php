@@ -33,8 +33,16 @@ use App\Controllers\Pages;
 $routes->get('/', 'Home::index');
 
 
-$routes->get('pages', [Pages::class, 'index']);
-$routes->get('(:segment)', [Pages::class, 'view']);
+// $routes->get('pages', [Pages::class, 'index']);
+// $routes->get('(:segment)', [Pages::class, 'view']);
+
+// $routes->get('/register','Register::index');
+// $routes->post('/register/process','Register::process');
+// $routes->get('/login', 'Login::index');
+
+// $routes->post('/login/process', 'Login::process');
+// $routes->get('/logout', 'Login::logout');
+// $routes->get('/home', 'Pages::index');
 
 /*
  * --------------------------------------------------------------------
